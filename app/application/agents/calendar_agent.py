@@ -14,7 +14,7 @@ class CalendarAgent(Agent):
         #                                               metingDetails.description, metingDetails.start_date,  metingDetails.end_date,
         #                                               metingDetails.reminders, metingDetails.timezone, metingDetails.attendees)
 
-        result = self.calendar_service.schedule_event('Meeting with John', '1234 Street, City, Country',
+        result = self.calendar_service.schedule_event('Meeting with John', '1234 S     treet, City, Country',
                                                       'Discussing the quarterly goals and progress.', '2025-03-05T09:00:00',
                                                       '2025-03-05T10:00:00', True, 'America/New_York', ['manojkke@gmail.comn', 'samit@gmail.com'])
 
