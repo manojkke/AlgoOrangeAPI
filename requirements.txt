@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pydantic
+motor
+sqlalchemy
+pytest
+pytest-asyncio
+dependency-injector
+pylint
