@@ -7,9 +7,9 @@ chatRouter = APIRouter()
 
 
 @chatRouter.post("/query")
-async def query_handler(query: str):
-    orchestrator = Orchestrator(query)
-    response = await orchestrator.route_query(query)
+async def query_handler(userChatQuery: str, chatHistory: list, currentUser: str):
+    orchestrator = Orchestrator(userChatQuery)
+    response = await orchestrator.route_query(userChatQuery)
     return {"response": response}
 
 

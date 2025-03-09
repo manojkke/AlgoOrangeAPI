@@ -6,17 +6,17 @@ from app.core.di import Container
 
 
 class Orchestrator:
-    def __init__(self, agent: str):
-        self.agent = agent
+    def __init__(self, userChatQuery: str):
+        self.userChatQuery = userChatQuery
 
     async def route_query(self, query: str):
-        if self.agent == "medical":
+        if self.userChatQuery == "medical":
             agent = MedicalAgent()
-        elif self.agent == "student":
+        elif self.userChatQuery == "student":
             agent = StudentAgent()
-        elif self.agent == "social_media":
+        elif self.userChatQuery == "social_media":
             agent = SocialMediaAgent()
-        elif self.agent == "calendar":
+        elif self.userChatQuery == "calendar":
             agent = CalendarAgent(Container.calendar_service())
         else:
             return "Agent not found."
