@@ -7,7 +7,7 @@ class CalendarAgent(Agent):
         self.calendar_service = calendar_service
 
     async def handle_query(self, userChatQuery: str, userChatHistory: str) -> str:
-        # Calendar-specific processing here
+        # Calendar-specific processin  g here
         # metingDetails = parse_meeting_details(userChatQuery)
 
         # result = self.calendar_service.schedule_event(metingDetails.title, metingDetails.location,
