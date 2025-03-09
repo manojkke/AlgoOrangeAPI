@@ -11,16 +11,15 @@ class Orchestrator:
         self.userChatQuery = userChatQuery
         self.chatHistory = chatHistory
 
-    async def route_query(self, userChatQuery: str):
+    async def route_query(self, userChatQuery: str, chatHistory: str):
         # Send the query to OpenAI LLM to decide which agent to call
+        chatHistory = chatHistory
         response = openai.Completion.create(
             engine="text-davinci-003",
             prompt=(
                 "Based on the following user query and chat history, determine the most appropriate agent to handle it: "
-                f"Query: {userChatQuery}. Chat History: {self.chatHistory}. The options are: "
-                "medical (specializes in healthcare-related queries), "
-                "student (specializes in educational and academic queries), "
-                "social_media (specializes in social media-related queries), "
+                f"Query: {userChatQuery}. Chat History: {chatHistory}. The options are: "
+                "student (specializes in educational and academic queries), " 
                 "calendar (specializes in scheduling and calendar management queries)."
             ),
             max_tokens=10
