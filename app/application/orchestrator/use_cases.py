@@ -2,6 +2,7 @@ from app.application.agents.medical_agent import MedicalAgent
 from app.application.agents.student_agent import StudentAgent
 from app.application.agents.social_media_agent import SocialMediaAgent
 from app.application.agents.calendar_agent import CalendarAgent
+from app.core.di import Container
 
 
 class Orchestrator:
@@ -16,7 +17,7 @@ class Orchestrator:
         elif self.agent == "social_media":
             agent = SocialMediaAgent()
         elif self.agent == "calendar":
-            agent = CalendarAgent()
+            agent = CalendarAgent(Container.calendar_service())
         else:
             return "Agent not found."
 
