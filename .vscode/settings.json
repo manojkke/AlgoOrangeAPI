@@ -1,4 +1,5 @@
 {
   "python.formatting.provider": "ms-python.autopep8",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "gorq.key": "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"
 }

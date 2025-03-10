@@ -12,7 +12,7 @@ async def query_handler(userChatQuery: str, chatHistory: str, currentUser: str):
     orchestrator = Orchestrator(userChatQuery, chatHistory)
     response = await orchestrator.route_query(userChatQuery, chatHistory)
     test = "All Good Algo ORange AI " + userChatQuery
-    return {"response": test}
+    return {"response": test + " " + response}
 
 
 app.include_router(chatRouter)
