@@ -17,7 +17,7 @@ class CalendarAgent(Agent):
 
     async def handle_query(self, userChatQuery: str, userChatHistory: str) -> str:
          
-        client = groq.Client(api_key="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")   # Replace with your actual API key
+        client = groq.Client(api_key=self.GROQ_API_KEY)  # Replace with your actual API key
 
         # Query Groq LLM to determine which agent to call
         response = client.chat.completions.create(
@@ -90,7 +90,7 @@ class CalendarAgent(Agent):
             to_date = (datetime.strptime(extracted_dates, "%Y-%m-%d") + timedelta(days=1)).isoformat() + 'Z'
         else:
             today = datetime.now()
-            from_date = today.replace(hour=0, minute=0, second=0, microsecond=0).isoformat() + 'Z'
+            from_date = today.replace(hour=0,minute=0, second=0, microsecond=0).isoformat() + 'Z'
             to_date = today.replace(hour=23, minute=59, second=59, microsecond=999999).isoformat() + 'Z'
 
         try:

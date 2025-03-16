@@ -1,8 +1,13 @@
 import groq  # Assuming you are using Groq's API
+from app.application.agents import general_agent
 from app.application.agents.medical_agent import MedicalAgent
+from app.application.agents.pdf_agent import PdfAgent
 from app.application.agents.student_agent import StudentAgent
 from app.application.agents.social_media_agent import SocialMediaAgent
 from app.application.agents.calendar_agent import CalendarAgent
+from app.application.agents.general_agent import GeneralAgent
+from app.application.agents.web_agent import WebAgent  # Add this import
+
 from app.core.di import Container
 import os
 
@@ -22,10 +27,13 @@ class Orchestrator:
             messages=[
                 {"role": "system", "content": "You are an AI that routes queries to specialized agents."},
                 {"role": "user", "content": f"Query: {userChatQuery}. Chat History: {chatHistory}. The options are: "
+                                             "general (for general queries), "
                                              "student (specializes in educational and academic queries), "
                                              "medical (specializes in health-related queries), "
                                              "social_media (specializes in social media management), "
-                                             "calendar (specializes in scheduling and calendar management). "
+                                             "calendar (specializes in scheduling and calendar management), "
+                                             "web_agent (specializes in web scraping). "
+                                             
                                              "Return only the agent name (e.g., 'student', 'medical')."}
             ],
             max_tokens=10
@@ -37,10 +45,14 @@ class Orchestrator:
 
         # Map decision to the corresponding agent
         agent_mapping = {
+            "general": lambda:GeneralAgent(),
             "medical": MedicalAgent,
             "student": lambda: StudentAgent(Container.student_service(), Container.db_session()),  # Added db_session
             "social_media": SocialMediaAgent,
             "calendar": lambda: CalendarAgent(Container.calendar_service()),
+            "web_agent": lambda: WebAgent(),
+            "pdf_agent": lambda: PdfAgent()
+            
         }
         print(agent_mapping)
 
@@ -56,3 +68,4 @@ class Orchestrator:
             return await agent.handle_query(userChatQuery, chatHistory, Container.db_session())
         else:
             return await agent.handle_query(userChatQuery, chatHistory)
+

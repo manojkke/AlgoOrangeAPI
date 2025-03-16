@@ -15,4 +15,15 @@ google-auth-httplib2==0.2.0
 google-auth-oauthlib==1.2.1
 googleapis-common-protos==1.68.0
 
-groq==0.18.0
+groq==0.18.0 
+
+faiss-cpu==1.10.0
+fitz==0.0.1.dev2
+PyPDF2==1.26.0
+sentence-transformers==3.4.1
+langchain==0.3.19
+langchain-community
+langchain-core==0.3.37
+langchain-groq==0.2.4
+langchain-huggingface==0.1.2
+langchain-text-splitters==0.3.6 
