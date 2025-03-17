@@ -17,7 +17,7 @@ class CalendarAgent(Agent):
 
     async def handle_query(self, userChatQuery: str, userChatHistory: str) -> str:
          
-        client = groq.Client(api_key=self.GROQ_API_KEY)  # Replace with your actual API key
+        client = groq.Client(api_key="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")  # Replace with your actual API key
 
         # Query Groq LLM to determine which agent to call
         response = client.chat.completions.create(
@@ -294,39 +294,49 @@ class CalendarAgent(Agent):
             return {"status": "error", "message": str(e)}
 
 def extract_event_details(userchatquery):
-
     """Extracts meeting details (summary, date, time, description) from user query."""
-    
-    # Default values
+
     summary = "Meeting"
     description = "No description provided."
     start_time, end_time = None, None
 
-    # Extract date & time (Modify this with an advanced NLP-based parser if needed)
-    match = re.search(r'on (\d{4}-\d{2}-\d{2})', userchatquery)  # Example: "on 2025-04-10"
+    # Extract date
+    match = re.search(r'on (\d{4}-\d{2}-\d{2})', userchatquery)  
     if match:
         date_str = match.group(1)
-        start_time = datetime.strptime(date_str, "%Y-%m-%d").replace(hour=9, minute=0)  # Default 9 AM
+        start_time = datetime.strptime(date_str, "%Y-%m-%d").replace(hour=9, minute=0)
         end_time = start_time + timedelta(hours=1)  # Default 1-hour duration
 
     if "tomorrow" in userchatquery:
         start_time = datetime.now() + timedelta(days=1)
-        start_time = start_time.replace(hour=9, minute=0)  # Default 9 AM
+        start_time = start_time.replace(hour=9, minute=0)  
         end_time = start_time + timedelta(hours=1)
 
-    time_match = re.search(r'at (\d{1,2}:\d{2})', userchatquery)  # Example: "at 15:30"
-    if time_match and start_time:
+    # Extract start time
+    time_match = re.search(r'at (\d{1,2}:\d{2})', userchatquery)  
+    if time_match:
         time_parts = time_match.group(1).split(":")
-        start_time = start_time.replace(hour=int(time_parts[0]), minute=int(time_parts[1]))
-        end_time = start_time + timedelta(hours=1)
+        if start_time:
+            start_time = start_time.replace(hour=int(time_parts[0]), minute=int(time_parts[1]))
+        else:
+            start_time = datetime.now().replace(hour=int(time_parts[0]), minute=int(time_parts[1]))
+
+        end_time = start_time + timedelta(hours=1)  # Default duration if no end time provided
+
+    # Extract end time explicitly
+    end_time_match = re.search(r'to (\d{1,2}:\d{2})', userchatquery)  
+    if end_time_match:
+        end_time_parts = end_time_match.group(1).split(":")
+        if start_time:  # Ensure we have a start time before setting end time
+            end_time = start_time.replace(hour=int(end_time_parts[0]), minute=int(end_time_parts[1]))
 
     # Extract description
-    desc_match = re.search(r'about (.+)', userchatquery)  # Example: "about quarterly review"
+    desc_match = re.search(r'about (.+)', userchatquery)
     if desc_match:
         description = desc_match.group(1)
 
-    # Extract meeting title/summary
-    title_match = re.search(r'for (.+)', userchatquery)  # Example: "for team sync-up"
+    # Extract meeting summary
+    title_match = re.search(r'for (.+)', userchatquery)
     if title_match:
         summary = title_match.group(1)
 

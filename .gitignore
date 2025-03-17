@@ -3,3 +3,4 @@ app/__pycache__/
 credentials.json
 .env
 uploads
+gmail_credentials.json
