@@ -32,9 +32,11 @@ class Orchestrator:
                                              "medical (specializes in health-related queries), "
                                              "social_media (specializes in social media management), "
                                              "calendar (specializes in scheduling and calendar management), "
-                                             "web_agent (specializes in web scraping). "
+                                             "web_agent (specializes in web scraping), "
+                                             "pdf_agent (specializes in PDF processing), "
+                                          
                                              
-                                             "Return only the agent name (e.g., 'student', 'medical')."}
+                                             "Return only the agent name (e.g., 'student', 'medical','social_media','calendar','web','pdf,'gmail')."}
             ],
             max_tokens=10
         )
@@ -51,7 +53,8 @@ class Orchestrator:
             "social_media": SocialMediaAgent,
             "calendar": lambda: CalendarAgent(Container.calendar_service()),
             "web_agent": lambda: WebAgent(),
-            "pdf_agent": lambda: PdfAgent()
+            "pdf_agent": lambda: PdfAgent(),
+           
             
         }
         print(agent_mapping)

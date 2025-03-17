@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from app.presentation.student_api import studentRouter
 from app.presentation.chat_api import chatRouter
-from app.application.agents.pdf_agent import uploadRouter
+from app.application.agents.pdf_agent import pdfRouter
 from app.application.agents.calendar_agent import CalendarAgent
 from app.infrastructure.services.calendar.google_calendar import GoogleCalendar
 from fastapi.middleware.cors import CORSMiddleware
@@ -19,7 +19,7 @@ app.add_middleware(
 
 app.include_router(studentRouter, prefix="/Students2", tags=["StudentsAPI"])
 app.include_router(chatRouter, prefix="/chat", tags=["ChatAPI"])
-app.include_router(uploadRouter, prefix="/upload", tags=["UploadAPI"])
+app.include_router(pdfRouter, prefix="/upload", tags=["UploadAPI"])
 
 
 
