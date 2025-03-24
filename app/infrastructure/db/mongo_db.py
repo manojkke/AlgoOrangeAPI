@@ -16,7 +16,6 @@ class MongoDB:
         if not collections:
             return []
 
-        print("Collections Found:", collections)  # Debugging line
 
         # Iterate through each collection and fetch documents
         for collection_name in collections:
