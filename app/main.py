@@ -1,11 +1,13 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from app.presentation.student_api import studentRouter
 from app.presentation.chat_api import chatRouter
+
+from app.presentation.browser_plugin_api import browserPluginApiRouter
+from app.application.agents.calendar_agent import CalendarAgent
+from app.infrastructure.services.calendar.google_calendar import GoogleCalendar
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-# Enable CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Allows all origins
@@ -13,8 +15,10 @@ app.add_middleware(
     allow_methods=["*"],  # Allows all methods
     allow_headers=["*"],  # Allows all headers
 )
-app.include_router(studentRouter, prefix="/Students2", tags=["StudentsAPI"])
 app.include_router(chatRouter, prefix="/chat", tags=["ChatAPI"])
+app.include_router(
+    browserPluginApiRouter, prefix="/browserPlugin", tags=["BrowserPluginAPI"]
+)
 
 
 @app.get("/")
